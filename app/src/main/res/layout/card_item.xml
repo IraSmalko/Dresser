@@ -18,9 +18,9 @@
         <ImageView
             android:id="@+id/imageView"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:layout_marginStart="@dimen/activity_vertical_margin"
-            android:src="@drawable/t_shirt"
+            android:src="@drawable/chirt"
             android:layout_weight="1"/>
 
         <TextView

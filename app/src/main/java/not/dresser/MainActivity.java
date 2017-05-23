@@ -121,7 +121,7 @@ public class MainActivity extends AppCompatActivity
 
     public List<Category> addCategoryList() {
         List<Category> categoryList = new ArrayList<>();
-        int[] categoryImage = {R.drawable.t_shirt, R.drawable.pants, R.drawable.dress,
+        int[] categoryImage = {R.drawable.chirt, R.drawable.pants, R.drawable.dress,
                 R.drawable.shorts, R.drawable.skirt, R.drawable.shirt, R.drawable.jacket};
         for (int i = 0; i < getResources().getStringArray(R.array.category).length; i++) {
             Category category = new Category();
