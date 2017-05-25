@@ -8,9 +8,13 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
@@ -24,6 +28,7 @@ public class ShelfActivity extends AppCompatActivity {
     private PhotoFromCameraHelper mPhotoFromCameraHelper;
     private CropHelper mCropHelper;
     private ImageView mImageView;
+    private Spinner categorySpinner, occasionSpinner, seasonSpinner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +39,25 @@ public class ShelfActivity extends AppCompatActivity {
         ImageButton btnPhotoFromGallery = (ImageButton) findViewById(R.id.categoryPhotoUrlGallery);
         ImageButton btnPhotoFromCamera = (ImageButton) findViewById(R.id.categoryPhotoUrlCamera);
         Button btnSave = (Button) findViewById(R.id.btnSave);
+        categorySpinner = (Spinner) findViewById(R.id.categorySpinner);
+        occasionSpinner = (Spinner) findViewById(R.id.occasionSpinner);
+        seasonSpinner = (Spinner) findViewById(R.id.seasonSpinner);
+
+        ArrayAdapter<String> categoryAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item,
+                getResources().getStringArray(R.array.category));
+        ArrayAdapter<String> occasionAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item,
+                getResources().getStringArray(R.array.occasion));
+        ArrayAdapter<String> seasonAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item,
+                getResources().getStringArray(R.array.season));
+        categoryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        occasionAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        seasonAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        categorySpinner.setAdapter(categoryAdapter);
+        occasionSpinner.setAdapter(occasionAdapter);
+        seasonSpinner.setAdapter(seasonAdapter);
+        categorySpinner.setPrompt("Category");
+        occasionSpinner.setPrompt("Occasion");
+        seasonSpinner.setPrompt("Season");
 
         Intent intent = getIntent();
         assert actionBar != null;
@@ -75,7 +99,10 @@ public class ShelfActivity extends AppCompatActivity {
                     mPhotoFromCameraHelper.takePhoto();
                     break;
                 case R.id.btnSave:
-
+                    String itemCategorySpinner = categorySpinner.getSelectedItem().toString();
+                    String itemOccasionSpinnerSpinner = occasionSpinner.getSelectedItem().toString();
+                    String itemSeasonSpinner = seasonSpinner.getSelectedItem().toString();
+                    Toast.makeText(getApplicationContext(), itemSeasonSpinner, Toast.LENGTH_SHORT).show();
                     break;
             }
         }

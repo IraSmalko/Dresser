@@ -9,4 +9,17 @@
         <item>shirt</item>
         <item>jacket</item>
         </string-array>
+
+    <string-array name="occasion">
+        <item>festive</item>
+        <item>casual</item>
+        <item>home</item>
+    </string-array>
+
+    <string-array name="season">
+        <item>winter</item>
+        <item>summer</item>
+        <item>summer-spring</item>
+        <item>autumn-spring</item>
+    </string-array>
 </resources>
