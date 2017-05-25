@@ -3,13 +3,15 @@ package not.dresser;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.net.Uri;
-import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
+
+import com.android.camera.CropImageIntentBuilder;
+
 import java.io.File;
+import java.util.Random;
 
 public class CropHelper {
 
@@ -24,24 +26,19 @@ public class CropHelper {
     }
 
     private Uri createFileUriCrop() {
-        File file = new File(mContext.getCacheDir(), "photoCrop.jpg");
+        final Random random = new Random();
+        File file = new File(mContext.getCacheDir(), String.valueOf(random.nextInt()) + "photoCrop.jpg");
 
         return FileProvider.getUriForFile(mContext, "not.dresser", file);
     }
 
     public void cropImage(Uri photoUri) {
         mCropImageUri = createFileUriCrop();
-        Intent cropIntent = new Intent("com.android.camera.action.CROP");
-        cropIntent.setDataAndType(photoUri, "image/*");
-        cropIntent.putExtra("crop", true);
-        cropIntent.putExtra("aspectX", 33);
-        cropIntent.putExtra("aspectY", 24);
-        cropIntent.putExtra("outputX", 660);
-        cropIntent.putExtra("outputY", 480);
-        cropIntent.putExtra("return-data", true);
-        cropIntent.putExtra(MediaStore.EXTRA_OUTPUT, mCropImageUri);
-        ActivityCompat.startActivityForResult((AppCompatActivity)mContext, cropIntent,
-                REQUEST_CROP_PICTURE, null);
+        CropImageIntentBuilder cropImage = new CropImageIntentBuilder(1048, 1048, mCropImageUri);
+        cropImage.setOutlineColor(0xFF03A9F4);
+        cropImage.setSourceImage(photoUri);
+        ActivityCompat.startActivityForResult((AppCompatActivity) mContext, cropImage
+                .getIntent(mContext), REQUEST_CROP_PICTURE, null);
     }
 
     public void onActivityResult(int resultCode, int requestCode) {

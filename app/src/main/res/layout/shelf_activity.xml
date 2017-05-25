@@ -29,13 +29,13 @@
             android:orientation="vertical">
 
             <ImageButton
-                android:id="@+id/categoryRecipesPhotoUrlGallery"
+                android:id="@+id/categoryPhotoUrlGallery"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 ads:srcCompat="@android:drawable/ic_menu_gallery" />
 
             <ImageButton
-                android:id="@+id/categoryRecipesPhotoUrlCamera"
+                android:id="@+id/categoryPhotoUrlCamera"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 ads:srcCompat="@android:drawable/ic_menu_camera" />
