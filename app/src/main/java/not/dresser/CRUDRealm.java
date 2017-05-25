@@ -1,8 +1,6 @@
 package not.dresser;
 
 
-import android.content.Context;
-
 import java.util.List;
 
 import io.realm.Realm;
@@ -16,19 +14,21 @@ public class CRUDRealm {
         mRealm = Realm.getDefaultInstance();
     }
 
-    public List<ClothingItem> allObjects (){
-       return mRealm.where(ClothingItem.class).findAll();
+    public List<ClothingItem> allObjects() {
+        return mRealm.where(ClothingItem.class).findAll();
     }
 
-    public void addClothingItem(String name, String photoUrl, String category, String occasion, String season) {
+    public int addClothingItem(String name, String photoUrl, String category, String occasion, String season) {
         mRealm.beginTransaction();
-        ClothingItem clothingItem = mRealm.createObject(ClothingItem.class);
+        int id = allObjects().size() + 1;
+        ClothingItem clothingItem = mRealm.createObject(ClothingItem.class, id);
         clothingItem.setName(name);
         clothingItem.setCategory(category);
         clothingItem.setOccasion(occasion);
         clothingItem.setPhotoUrl(photoUrl);
         clothingItem.setSeason(season);
         mRealm.commitTransaction();
+        return clothingItem.getId();
     }
 
     public void removeClothingItem(int id) {

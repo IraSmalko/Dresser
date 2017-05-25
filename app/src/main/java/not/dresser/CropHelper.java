@@ -19,15 +19,20 @@ public class CropHelper {
     private Context mContext;
     private OnCrop mOnCropListener;
     private Uri mCropImageUri;
+    private String mPhotoName;
 
     public CropHelper(Context context, OnCrop onCropListener) {
         mContext = context;
         mOnCropListener = onCropListener;
     }
 
-    private Uri createFileUriCrop() {
+    public String randomPhotoName(){
         final Random random = new Random();
-        File file = new File(mContext.getCacheDir(), String.valueOf(random.nextInt()) + "photoCrop.jpg");
+        return String.valueOf(random.nextInt()) + "photoCrop.jpg";
+    }
+
+    private Uri createFileUriCrop() {
+        File file = new File(mContext.getCacheDir(), randomPhotoName());
 
         return FileProvider.getUriForFile(mContext, "not.dresser", file);
     }

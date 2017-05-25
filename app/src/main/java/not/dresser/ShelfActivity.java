@@ -2,21 +2,24 @@ package not.dresser;
 
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.SimpleTarget;
 
 import static not.dresser.CropHelper.REQUEST_CROP_PICTURE;
 import static not.dresser.MainActivity.NAME;
@@ -29,12 +32,16 @@ public class ShelfActivity extends AppCompatActivity {
     private CropHelper mCropHelper;
     private ImageView mImageView;
     private Spinner categorySpinner, occasionSpinner, seasonSpinner;
+    private EditText mInputName;
+    private String mPhotoUrl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.shelf_activity);
+
         ActionBar actionBar = getSupportActionBar();
+        mInputName = (EditText) findViewById(R.id.name);
         mImageView = (ImageView) findViewById(R.id.photoImageView);
         ImageButton btnPhotoFromGallery = (ImageButton) findViewById(R.id.categoryPhotoUrlGallery);
         ImageButton btnPhotoFromCamera = (ImageButton) findViewById(R.id.categoryPhotoUrlCamera);
@@ -72,7 +79,17 @@ public class ShelfActivity extends AppCompatActivity {
         mCropHelper = new CropHelper(this, new CropHelper.OnCrop() {
             @Override
             public void onCrop(Uri cropImageUri) {
-                Glide.with(getApplicationContext()).load(cropImageUri).into(mImageView);
+                Glide.with(getApplicationContext())
+                        .load(cropImageUri)
+                        .asBitmap()
+                        .into(new SimpleTarget<Bitmap>(1048, 1048) {
+                            @Override
+                            public void onResourceReady(Bitmap resource, GlideAnimation glideAnimation) {
+                                mImageView.setImageBitmap(resource);
+                                mPhotoUrl = LocalSavingImagesHelper.getPathForNewPhoto(mCropHelper
+                                        .randomPhotoName(), resource, getApplicationContext());
+                            }
+                        });
             }
         });
 
@@ -99,10 +116,14 @@ public class ShelfActivity extends AppCompatActivity {
                     mPhotoFromCameraHelper.takePhoto();
                     break;
                 case R.id.btnSave:
-                    String itemCategorySpinner = categorySpinner.getSelectedItem().toString();
-                    String itemOccasionSpinnerSpinner = occasionSpinner.getSelectedItem().toString();
-                    String itemSeasonSpinner = seasonSpinner.getSelectedItem().toString();
-                    Toast.makeText(getApplicationContext(), itemSeasonSpinner, Toast.LENGTH_SHORT).show();
+                    if (mPhotoUrl != null && !mInputName.getText().toString().equals("")) {
+                        String itemCategorySpinner = categorySpinner.getSelectedItem().toString();
+                        String itemOccasionSpinnerSpinner = occasionSpinner.getSelectedItem().toString();
+                        String itemSeasonSpinner = seasonSpinner.getSelectedItem().toString();
+                        int id = new CRUDRealm().addClothingItem(mInputName.getText().toString(), mPhotoUrl,
+                                itemCategorySpinner, itemOccasionSpinnerSpinner, itemSeasonSpinner);
+                        Toast.makeText(getApplicationContext(), String.valueOf(id), Toast.LENGTH_SHORT).show();
+                    }
                     break;
             }
         }
