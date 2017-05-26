@@ -25,7 +25,10 @@
             </intent-filter>
         </activity>
         <activity android:name=".ConstructorActivity" />
-        <activity android:name=".ShelfActivity" />
+        <activity android:name=".AddClothingItemActivity" />
+        <activity android:name=".ShelfListActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".ShelfActivity"/>
 
         <activity android:name="com.android.camera.CropImage" />
 

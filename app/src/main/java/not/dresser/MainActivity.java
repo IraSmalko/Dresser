@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity
                 new CategoryRecyclerAdapter.ItemClickListener() {
                     @Override
                     public void onItemClick(Category item) {
-                        Intent intent = new Intent(getApplicationContext(), ShelfActivity.class);
+                        Intent intent = new Intent(getApplicationContext(), ShelfListActivity.class);
                         intent.putExtra(NAME, item.getName());
                         startActivity(intent);
                     }

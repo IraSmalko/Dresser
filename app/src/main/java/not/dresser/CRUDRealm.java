@@ -10,8 +10,8 @@ public class CRUDRealm {
 
     private Realm mRealm;
 
-    public CRUDRealm() {
-        mRealm = Realm.getDefaultInstance();
+    public CRUDRealm(Realm realm) {
+        mRealm = realm;
     }
 
     public List<ClothingItem> allObjects() {
@@ -29,6 +29,11 @@ public class CRUDRealm {
         clothingItem.setSeason(season);
         mRealm.commitTransaction();
         return clothingItem.getId();
+    }
+
+    public List<ClothingItem> getClothingList(String categoryName){
+        mRealm.beginTransaction();
+        return mRealm.where(ClothingItem.class).equalTo("category", categoryName).findAll();
     }
 
     public void removeClothingItem(int id) {

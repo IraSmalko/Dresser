@@ -2,7 +2,6 @@ package not.dresser;
 
 
 import android.content.Context;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,44 +9,46 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class CategoryRecyclerAdapter extends RecyclerView.Adapter<CategoryRecyclerAdapter.CustomViewHolder> {
+public class ShelfListRecyclerAdapter extends RecyclerView.Adapter<ShelfListRecyclerAdapter.CustomViewHolder> {
 
     private Context mContext;
     private LayoutInflater mInflater;
-    private List<Category> mItems = new ArrayList<>();
-    private CategoryRecyclerAdapter.ItemClickListener mClickListener;
+    private List<ClothingItem> mItems = new ArrayList<>();
+    private ShelfListRecyclerAdapter.ItemClickListener mClickListener;
 
-    public CategoryRecyclerAdapter(Context context, List<Category> items,
-                                         CategoryRecyclerAdapter.ItemClickListener clickListener) {
+    public ShelfListRecyclerAdapter(Context context, List<ClothingItem> items,
+                                   ShelfListRecyclerAdapter.ItemClickListener clickListener) {
         updateAdapter(items);
         mContext = context;
         mClickListener = clickListener;
     }
 
-    public void updateAdapter(List<Category> category) {
+    public void updateAdapter(List<ClothingItem> clothingItems) {
         mItems.clear();
-        if (category != null) {
-            mItems.addAll(category);
+        if (clothingItems != null) {
+            mItems.addAll(clothingItems);
         }
         notifyDataSetChanged();
     }
 
     @Override
-    public CustomViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ShelfListRecyclerAdapter.CustomViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if (mInflater == null) {
             mInflater = LayoutInflater.from(mContext);
         }
-        return CustomViewHolder.create(mInflater, parent);
+        return ShelfListRecyclerAdapter.CustomViewHolder.create(mInflater, parent);
     }
 
     @Override
-    public void onBindViewHolder(CustomViewHolder holder, int position) {
-        final Category item = mItems.get(position);
-            holder.textView.setText(item.getName());
-            holder.imageView.setImageDrawable(item.getPhoto());
+    public void onBindViewHolder(ShelfListRecyclerAdapter.CustomViewHolder holder, int position) {
+        final ClothingItem item = mItems.get(position);
+        holder.textView.setText(item.getName());
+        Glide.with(mContext).load(item.getPhotoUrl()).into(holder.imageView);
 
         View.OnClickListener listener = new View.OnClickListener() {
             @Override
@@ -69,8 +70,8 @@ public class CategoryRecyclerAdapter extends RecyclerView.Adapter<CategoryRecycl
         private TextView textView;
         private ImageView imageView;
 
-        static CustomViewHolder create(LayoutInflater inflater, ViewGroup parent) {
-            return new CustomViewHolder(inflater.inflate(R.layout.card_item, parent, false));
+        static ShelfListRecyclerAdapter.CustomViewHolder create(LayoutInflater inflater, ViewGroup parent) {
+            return new ShelfListRecyclerAdapter.CustomViewHolder(inflater.inflate(R.layout.shelf_item, parent, false));
         }
 
         CustomViewHolder(View v) {
@@ -81,6 +82,6 @@ public class CategoryRecyclerAdapter extends RecyclerView.Adapter<CategoryRecycl
     }
 
     public interface ItemClickListener {
-        void onItemClick(Category item);
+        void onItemClick(ClothingItem item);
     }
 }
