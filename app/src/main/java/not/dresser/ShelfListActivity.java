@@ -15,6 +15,11 @@ import static not.dresser.MainActivity.NAME;
 
 public class ShelfListActivity extends AppCompatActivity {
 
+    static final String PHOTO_URL = "photoUrl";
+    static final String CATEGORY = "category";
+    static final String OCCASION = "occasion";
+    static final String SEASON = "season";
+
     private Realm mRealm;
     private Intent mIntent;
 
@@ -36,9 +41,13 @@ public class ShelfListActivity extends AppCompatActivity {
                 new ShelfListRecyclerAdapter.ItemClickListener() {
                     @Override
                     public void onItemClick(ClothingItem item) {
-//                        Intent intent = new Intent(getApplicationContext(), AddClothingItemActivity.class);
-//                        intent.putExtra(NAME, item.getName());
-//                        startActivity(intent);
+                        Intent intent = new Intent(getApplicationContext(), ClothingItemActivity.class);
+                        intent.putExtra(NAME, item.getName());
+                        intent.putExtra(PHOTO_URL, item.getPhotoUrl());
+                        intent.putExtra(CATEGORY, item.getCategory());
+                        intent.putExtra(OCCASION, item.getOccasion());
+                        intent.putExtra(SEASON, item.getSeason());
+                        startActivity(intent);
                     }
                 });
 

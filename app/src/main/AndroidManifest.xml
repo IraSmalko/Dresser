@@ -29,6 +29,7 @@
         <activity android:name=".ShelfListActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".ShelfActivity"/>
+        <activity android:name=".ClothingItemActivity"/>
 
         <activity android:name="com.android.camera.CropImage" />
 
