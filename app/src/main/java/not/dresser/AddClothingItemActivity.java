@@ -21,8 +21,6 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
 
-import io.realm.Realm;
-
 import static not.dresser.CropHelper.REQUEST_CROP_PICTURE;
 import static not.dresser.MainActivity.NAME;
 import static not.dresser.PhotoFromCameraHelper.GALLERY_REQUEST;
@@ -36,7 +34,6 @@ public class AddClothingItemActivity extends AppCompatActivity {
     private Spinner categorySpinner, occasionSpinner, seasonSpinner;
     private EditText mInputName;
     private String mPhotoUrl;
-    private Realm mRealm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,8 +49,6 @@ public class AddClothingItemActivity extends AppCompatActivity {
         categorySpinner = (Spinner) findViewById(R.id.categorySpinner);
         occasionSpinner = (Spinner) findViewById(R.id.occasionSpinner);
         seasonSpinner = (Spinner) findViewById(R.id.seasonSpinner);
-
-        mRealm = Realm.getDefaultInstance();
 
         ArrayAdapter<String> categoryAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item,
                 getResources().getStringArray(R.array.category));
@@ -125,7 +120,7 @@ public class AddClothingItemActivity extends AppCompatActivity {
                         String itemCategorySpinner = categorySpinner.getSelectedItem().toString();
                         String itemOccasionSpinnerSpinner = occasionSpinner.getSelectedItem().toString();
                         String itemSeasonSpinner = seasonSpinner.getSelectedItem().toString();
-                        int id = new CRUDRealm(mRealm).addClothingItem(mInputName.getText().toString(), mPhotoUrl,
+                        int id = new CRUDRealm().addClothingItem(mInputName.getText().toString(), mPhotoUrl,
                                 itemCategorySpinner, itemOccasionSpinnerSpinner, itemSeasonSpinner);
                         Toast.makeText(getApplicationContext(), String.valueOf(id), Toast.LENGTH_SHORT).show();
                     }
@@ -144,11 +139,5 @@ public class AddClothingItemActivity extends AppCompatActivity {
                 mCropHelper.onActivityResult(resultCode, requestCode);
             }
         }
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        mRealm.close();
     }
 }

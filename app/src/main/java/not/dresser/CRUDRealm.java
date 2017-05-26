@@ -10,11 +10,11 @@ public class CRUDRealm {
 
     private Realm mRealm;
 
-    public CRUDRealm(Realm realm) {
-        mRealm = realm;
+    public CRUDRealm() {
+        mRealm = Realm.getDefaultInstance();
     }
 
-    public List<ClothingItem> allObjects() {
+    private List<ClothingItem> allObjects() {
         return mRealm.where(ClothingItem.class).findAll();
     }
 
@@ -32,7 +32,6 @@ public class CRUDRealm {
     }
 
     public List<ClothingItem> getClothingList(String categoryName){
-        mRealm.beginTransaction();
         return mRealm.where(ClothingItem.class).equalTo("category", categoryName).findAll();
     }
 

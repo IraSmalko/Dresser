@@ -9,8 +9,6 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
-import io.realm.Realm;
-
 import static not.dresser.MainActivity.NAME;
 
 public class ShelfListActivity extends AppCompatActivity {
@@ -20,7 +18,6 @@ public class ShelfListActivity extends AppCompatActivity {
     static final String OCCASION = "occasion";
     static final String SEASON = "season";
 
-    private Realm mRealm;
     private Intent mIntent;
 
     @Override
@@ -31,12 +28,12 @@ public class ShelfListActivity extends AppCompatActivity {
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.shelfListRecyclerView);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        mRealm = Realm.getDefaultInstance();
+
         mIntent = getIntent();
 
         getSupportActionBar().setTitle(mIntent.getStringExtra(NAME));
 
-        ShelfListRecyclerAdapter recyclerAdapter = new ShelfListRecyclerAdapter(this, new CRUDRealm(mRealm)
+        ShelfListRecyclerAdapter recyclerAdapter = new ShelfListRecyclerAdapter(this, new CRUDRealm()
                 .getClothingList(mIntent.getStringExtra(NAME)),
                 new ShelfListRecyclerAdapter.ItemClickListener() {
                     @Override
@@ -62,11 +59,5 @@ public class ShelfListActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        mRealm.close();
     }
 }
