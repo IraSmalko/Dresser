@@ -1,4 +1,4 @@
-package not.dresser;
+package not.dresser.entity;
 
 
 import android.graphics.drawable.Drawable;

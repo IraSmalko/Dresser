@@ -1,4 +1,4 @@
-package not.dresser;
+package not.dresser.activities;
 
 
 import android.content.Intent;
@@ -9,10 +9,12 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
-import static not.dresser.ShelfListActivity.OCCASION;
-import static not.dresser.ShelfListActivity.PHOTO_URL;
-import static not.dresser.ShelfListActivity.CATEGORY;
-import static not.dresser.ShelfListActivity.SEASON;
+import not.dresser.R;
+
+import static not.dresser.activities.ShelfListActivity.OCCASION;
+import static not.dresser.activities.ShelfListActivity.PHOTO_URL;
+import static not.dresser.activities.ShelfListActivity.CATEGORY;
+import static not.dresser.activities.ShelfListActivity.SEASON;
 
 public class ClothingItemActivity extends AppCompatActivity {
 

@@ -1,4 +1,4 @@
-package not.dresser;
+package not.dresser.activities;
 
 
 import android.hardware.Camera;
@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+
+import not.dresser.R;
 
 public class ConstructorActivity extends AppCompatActivity {
 

@@ -1,4 +1,4 @@
-package not.dresser;
+package not.dresser.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -18,10 +18,14 @@ import android.view.View;
 import java.util.ArrayList;
 import java.util.List;
 
+import not.dresser.R;
+import not.dresser.adapters.CategoryRecyclerAdapter;
+import not.dresser.entity.Category;
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    static final String NAME = "name";
+    public static final String NAME = "name";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

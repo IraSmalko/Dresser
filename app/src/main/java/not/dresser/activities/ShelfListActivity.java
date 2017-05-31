@@ -1,4 +1,4 @@
-package not.dresser;
+package not.dresser.activities;
 
 
 import android.content.Intent;
@@ -9,14 +9,19 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
-import static not.dresser.MainActivity.NAME;
+import not.dresser.helpers.CRUDRealm;
+import not.dresser.R;
+import not.dresser.adapters.ShelfListRecyclerAdapter;
+import not.dresser.entity.ClothingItem;
+
+import static not.dresser.activities.MainActivity.NAME;
 
 public class ShelfListActivity extends AppCompatActivity {
 
-    static final String PHOTO_URL = "photoUrl";
-    static final String CATEGORY = "category";
-    static final String OCCASION = "occasion";
-    static final String SEASON = "season";
+    public static final String PHOTO_URL = "photoUrl";
+    public static final String CATEGORY = "category";
+    public static final String OCCASION = "occasion";
+    public static final String SEASON = "season";
 
     private Intent mIntent;
 

@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:paddingTop="8dp"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="not.dresser.MainActivity"
+    tools:context="not.dresser.activities.MainActivity"
     tools:showIn="@layout/app_bar_main">
 
     <android.support.v7.widget.RecyclerView

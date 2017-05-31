@@ -1,4 +1,4 @@
-package not.dresser;
+package not.dresser.entity;
 
 
 import io.realm.RealmObject;

@@ -1,10 +1,11 @@
-package not.dresser;
+package not.dresser.helpers;
 
 
 import java.util.List;
 
 import io.realm.Realm;
 import io.realm.RealmResults;
+import not.dresser.entity.ClothingItem;
 
 public class CRUDRealm {
 

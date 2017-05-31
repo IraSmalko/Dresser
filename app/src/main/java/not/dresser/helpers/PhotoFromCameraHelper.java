@@ -1,4 +1,4 @@
-package not.dresser;
+package not.dresser.helpers;
 
 
 import android.app.Activity;
@@ -17,8 +17,8 @@ import java.util.List;
 
 public class PhotoFromCameraHelper {
 
-    static final int REQUEST_IMAGE_CAPTURE = 22;
-    static final int GALLERY_REQUEST = 13;
+   public static final int REQUEST_IMAGE_CAPTURE = 22;
+   public static final int GALLERY_REQUEST = 13;
 
     private Context mContext;
     private OnPhotoPicked mOnPhotoPickedListener;

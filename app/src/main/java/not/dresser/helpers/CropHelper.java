@@ -1,4 +1,4 @@
-package not.dresser;
+package not.dresser.helpers;
 
 
 import android.app.Activity;
@@ -15,7 +15,7 @@ import java.util.Random;
 
 public class CropHelper {
 
-    static final int REQUEST_CROP_PICTURE = 2;
+    public static final int REQUEST_CROP_PICTURE = 2;
     private Context mContext;
     private OnCrop mOnCropListener;
     private Uri mCropImageUri;

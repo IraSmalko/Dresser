@@ -1,4 +1,4 @@
-package not.dresser;
+package not.dresser.helpers;
 
 
 import android.content.Context;
@@ -20,14 +20,14 @@ public class LocalSavingImagesHelper {
         }
         File filePath = new File(directory, name + ".png");
 
-        FileOutputStream fos = null;
-        try {
-            fos = new FileOutputStream(filePath);
-            photo.compress(Bitmap.CompressFormat.PNG, 100, fos);
-            fos.close();
-        } catch (Exception e) {
-            Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show();
-        }
+//        FileOutputStream fos = null;
+//        try {
+//            fos = new FileOutputStream(filePath);
+//            photo.compress(Bitmap.CompressFormat.PNG, 100, fos);
+//            fos.close();
+//        } catch (Exception e) {
+//            Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show();
+//        }
 
         return Uri.fromFile(filePath).toString();
     }

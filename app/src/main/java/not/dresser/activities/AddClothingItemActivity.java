@@ -1,10 +1,11 @@
-package not.dresser;
+package not.dresser.activities;
 
 
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -21,10 +22,16 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
 
-import static not.dresser.CropHelper.REQUEST_CROP_PICTURE;
-import static not.dresser.MainActivity.NAME;
-import static not.dresser.PhotoFromCameraHelper.GALLERY_REQUEST;
-import static not.dresser.PhotoFromCameraHelper.REQUEST_IMAGE_CAPTURE;
+import not.dresser.helpers.CRUDRealm;
+import not.dresser.helpers.CropHelper;
+import not.dresser.helpers.LocalSavingImagesHelper;
+import not.dresser.helpers.PhotoFromCameraHelper;
+import not.dresser.R;
+
+import static not.dresser.helpers.CropHelper.REQUEST_CROP_PICTURE;
+import static not.dresser.activities.MainActivity.NAME;
+import static not.dresser.helpers.PhotoFromCameraHelper.GALLERY_REQUEST;
+import static not.dresser.helpers.PhotoFromCameraHelper.REQUEST_IMAGE_CAPTURE;
 
 public class AddClothingItemActivity extends AppCompatActivity {
 
@@ -86,8 +93,10 @@ public class AddClothingItemActivity extends AppCompatActivity {
                             @Override
                             public void onResourceReady(Bitmap resource, GlideAnimation glideAnimation) {
                                 mImageView.setImageBitmap(resource);
-                                mPhotoUrl = LocalSavingImagesHelper.getPathForNewPhoto(mCropHelper
+                                String path = LocalSavingImagesHelper.getPathForNewPhoto(mCropHelper
                                         .randomPhotoName(), resource, getApplicationContext());
+                                mPhotoUrl = MediaStore.Images.Media.insertImage(getContentResolver(),
+                                        resource, path, null);
                             }
                         });
             }
