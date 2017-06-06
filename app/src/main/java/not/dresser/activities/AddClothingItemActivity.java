@@ -93,6 +93,8 @@ public class AddClothingItemActivity extends AppCompatActivity {
                             @Override
                             public void onResourceReady(Bitmap resource, GlideAnimation glideAnimation) {
                                 mImageView.setImageBitmap(resource);
+//                                mPhotoUrl = ImagesHelper.getPathForNewPhoto(mCropHelper
+//                                        .randomPhotoName(), resource, getApplicationContext());
                                 mPhotoUrl = MediaStore.Images.Media.insertImage(getContentResolver(),
                                         resource, null, null);
                             }

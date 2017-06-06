@@ -129,8 +129,7 @@ public class ShelfListRecyclerAdapter extends RecyclerView.Adapter<ShelfListRecy
         if (mItems.contains(data)) {
             mItems.remove(position);
             notifyItemRemoved(position);
-            new CRUDRealm().removeClothingItem(data.getId(), mContext.getContentResolver(), Uri
-                    .parse(data.getPhotoUrl()), mContext);
+            new CRUDRealm().removeClothingItem(data.getId());
         }
     }
 

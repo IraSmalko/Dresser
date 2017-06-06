@@ -6,11 +6,11 @@ import android.content.Context;
 import android.net.Uri;
 
 import java.io.File;
+import java.net.URI;
 import java.util.List;
 
 import io.realm.Realm;
 import io.realm.RealmResults;
-
 import not.dresser.entity.ClothingItem;
 
 public class CRUDRealm {
@@ -42,13 +42,17 @@ public class CRUDRealm {
         return mRealm.where(ClothingItem.class).equalTo("category", categoryName).findAll();
     }
 
-    public void removeClothingItem(int id, ContentResolver resolver, Uri uri, Context context) {
+    public void removeClothingItem(int id) {
         mRealm.beginTransaction();
         RealmResults<ClothingItem> clothingItems = mRealm.where(ClothingItem.class).equalTo("id", id).findAll();
 
         if (!clothingItems.isEmpty()) {
             for (int i = clothingItems.size() - 1; i >= 0; i--) {
-//                    clothingItems.get(i).deleteFromRealm();
+                File file = new File(URI.create(clothingItems.get(i).getPhotoUrl()).getPath());
+                if (file.getAbsoluteFile().exists()) {
+                    file.delete();
+                    clothingItems.get(i).deleteFromRealm();
+                }
             }
         }
         mRealm.commitTransaction();

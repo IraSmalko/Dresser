@@ -13,17 +13,27 @@ import java.io.File;
 import java.io.FileOutputStream;
 
 import static android.content.ContentValues.TAG;
+import static not.dresser.R.drawable.photo;
 
 public class ImagesHelper {
 
-    public static File getPathForNewPhoto(String name, Context context) {
+    public static String getPathForNewPhoto(String name,  Bitmap photo, Context context) {
         ContextWrapper cw = new ContextWrapper(context);
         File directory = cw.getDir("Images", Context.MODE_PRIVATE);
         if (!directory.exists()) {
             directory.mkdir();
         }
         File filePath = new File(directory, name );
-        return filePath;
+
+        FileOutputStream fos = null;
+        try {
+            fos = new FileOutputStream(filePath);
+            photo.compress(Bitmap.CompressFormat.PNG, 100, fos);
+            fos.close();
+        } catch (Exception e) {
+            Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+        return Uri.fromFile(filePath).toString();
     }
 
     public static void deleteImage(ContentResolver resolver, Uri uri) {
