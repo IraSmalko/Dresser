@@ -16,7 +16,7 @@ import not.dresser.supporting.SwipeUtil;
 
 public class SwipeHelper {
 
-    private List<ClothingItem> mCategoryRecipesList = new ArrayList<>();
+    private List<ClothingItem> mClothingItems = new ArrayList<>();
     private RecyclerView mRecyclerView;
     private Context mContext;
 
@@ -25,8 +25,7 @@ public class SwipeHelper {
         mContext = context;
     }
 
-    private SwipeUtil setSwipeForCategory(List<ClothingItem> categoryRecipes) {
-        mCategoryRecipesList = categoryRecipes;
+    private SwipeUtil setSwipeForCategory() {
         return new SwipeUtil(0, ItemTouchHelper.LEFT, mContext) {
             @Override
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
@@ -39,7 +38,7 @@ public class SwipeHelper {
             public int getSwipeDirs(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
                 int position = viewHolder.getAdapterPosition();
                 ShelfListRecyclerAdapter adapter = (ShelfListRecyclerAdapter) mRecyclerView.getAdapter();
-                if (adapter.isPendingRemoval(position, mCategoryRecipesList)) {
+                if (adapter.isPendingRemoval(position, mClothingItems)) {
                     return 0;
                 }
                 return super.getSwipeDirs(recyclerView, viewHolder);
@@ -47,8 +46,8 @@ public class SwipeHelper {
         };
     }
 
-    public void attachSwipeCategory(List<ClothingItem> categoryRecipes) {
-        SwipeUtil swipeHelper = new SwipeHelper(mRecyclerView, mContext).setSwipeForCategory(categoryRecipes);
+    public void attachSwipeCategory() {
+        SwipeUtil swipeHelper = new SwipeHelper(mRecyclerView, mContext).setSwipeForCategory();
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(swipeHelper);
         itemTouchHelper.attachToRecyclerView(mRecyclerView);
         swipeHelper.setmLeftSwipeLable(mContext.getResources().getString(R.string.extraction));

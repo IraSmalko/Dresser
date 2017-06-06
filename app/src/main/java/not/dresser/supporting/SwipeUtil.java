@@ -17,7 +17,6 @@ import not.dresser.R;
 
 public abstract class SwipeUtil extends ItemTouchHelper.SimpleCallback {
 
-    private static final  R = ;
     private Drawable mBackground;
     private Drawable mDeleteIcon;
 

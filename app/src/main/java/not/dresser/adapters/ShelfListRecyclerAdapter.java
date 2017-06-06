@@ -2,6 +2,7 @@ package not.dresser.adapters;
 
 
 import android.content.Context;
+import android.net.Uri;
 import android.os.Handler;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -36,7 +37,7 @@ public class ShelfListRecyclerAdapter extends RecyclerView.Adapter<ShelfListRecy
     private HashMap<ClothingItem, Runnable> mPendingRunnables = new HashMap<>();
 
     public ShelfListRecyclerAdapter(Context context, List<ClothingItem> items,
-                                   ShelfListRecyclerAdapter.ItemClickListener clickListener) {
+                                    ShelfListRecyclerAdapter.ItemClickListener clickListener) {
         updateAdapter(items);
         mContext = context;
         mClickListener = clickListener;
@@ -70,9 +71,15 @@ public class ShelfListRecyclerAdapter extends RecyclerView.Adapter<ShelfListRecy
             /** {show regular layout} and {hide swipe layout} */
             holder.regularLayout.setVisibility(View.VISIBLE);
             holder.swipeLayout.setVisibility(View.GONE);
+            holder.textView.setText(item.getName());
+            Glide.with(mContext).load(item.getPhotoUrl()).into(holder.imageView);
         }
-        holder.textView.setText(item.getName());
-        Glide.with(mContext).load(item.getPhotoUrl()).into(holder.imageView);
+        holder.undo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                undoOpt(item);
+            }
+        });
 
         View.OnClickListener listener = new View.OnClickListener() {
             @Override
@@ -122,13 +129,14 @@ public class ShelfListRecyclerAdapter extends RecyclerView.Adapter<ShelfListRecy
         if (mItems.contains(data)) {
             mItems.remove(position);
             notifyItemRemoved(position);
-            new CRUDRealm().removeClothingItem(data.getId());
+            new CRUDRealm().removeClothingItem(data.getId(), mContext.getContentResolver(), Uri
+                    .parse(data.getPhotoUrl()), mContext);
         }
     }
 
-    public boolean isPendingRemoval(int position, List<ClothingItem> categoryRecipes) {
+    public boolean isPendingRemoval(int position, List<ClothingItem> clothingItems) {
         ClothingItem data = mItems.get(position);
-        return categoryRecipes.contains(data) || mItemsPendingRemoval.contains(data);
+        return mItemsPendingRemoval.contains(data);
     }
 
     @Override

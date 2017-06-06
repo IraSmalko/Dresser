@@ -9,10 +9,14 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import not.dresser.helpers.CRUDRealm;
 import not.dresser.R;
 import not.dresser.adapters.ShelfListRecyclerAdapter;
 import not.dresser.entity.ClothingItem;
+import not.dresser.helpers.SwipeHelper;
 
 import static not.dresser.activities.MainActivity.NAME;
 
@@ -24,6 +28,7 @@ public class ShelfListActivity extends AppCompatActivity {
     public static final String SEASON = "season";
 
     private Intent mIntent;
+    private List<ClothingItem> mClothingItems = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,13 +38,19 @@ public class ShelfListActivity extends AppCompatActivity {
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.shelfListRecyclerView);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        SwipeHelper swipeHelper = new SwipeHelper(recyclerView, getApplicationContext());
+
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setItemViewCacheSize(20);
+        recyclerView.setDrawingCacheEnabled(true);
+        recyclerView.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
 
         mIntent = getIntent();
 
         getSupportActionBar().setTitle(mIntent.getStringExtra(NAME));
+        mClothingItems = new CRUDRealm().getClothingList(mIntent.getStringExtra(NAME));
 
-        ShelfListRecyclerAdapter recyclerAdapter = new ShelfListRecyclerAdapter(this, new CRUDRealm()
-                .getClothingList(mIntent.getStringExtra(NAME)),
+        ShelfListRecyclerAdapter recyclerAdapter = new ShelfListRecyclerAdapter(this, mClothingItems,
                 new ShelfListRecyclerAdapter.ItemClickListener() {
                     @Override
                     public void onItemClick(ClothingItem item) {
@@ -54,6 +65,7 @@ public class ShelfListActivity extends AppCompatActivity {
                 });
 
         recyclerView.setAdapter(recyclerAdapter);
+        swipeHelper.attachSwipeCategory();
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {

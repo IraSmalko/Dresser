@@ -24,7 +24,7 @@ import com.bumptech.glide.request.target.SimpleTarget;
 
 import not.dresser.helpers.CRUDRealm;
 import not.dresser.helpers.CropHelper;
-import not.dresser.helpers.LocalSavingImagesHelper;
+import not.dresser.helpers.ImagesHelper;
 import not.dresser.helpers.PhotoFromCameraHelper;
 import not.dresser.R;
 
@@ -93,10 +93,8 @@ public class AddClothingItemActivity extends AppCompatActivity {
                             @Override
                             public void onResourceReady(Bitmap resource, GlideAnimation glideAnimation) {
                                 mImageView.setImageBitmap(resource);
-                                String path = LocalSavingImagesHelper.getPathForNewPhoto(mCropHelper
-                                        .randomPhotoName(), resource, getApplicationContext());
                                 mPhotoUrl = MediaStore.Images.Media.insertImage(getContentResolver(),
-                                        resource, path, null);
+                                        resource, null, null);
                             }
                         });
             }
