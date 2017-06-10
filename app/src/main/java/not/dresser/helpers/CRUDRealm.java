@@ -2,11 +2,8 @@ package not.dresser.helpers;
 
 
 import android.content.ContentResolver;
-import android.content.Context;
 import android.net.Uri;
 
-import java.io.File;
-import java.net.URI;
 import java.util.List;
 
 import io.realm.Realm;
@@ -42,15 +39,14 @@ public class CRUDRealm {
         return mRealm.where(ClothingItem.class).equalTo("category", categoryName).findAll();
     }
 
-    public void removeClothingItem(int id) {
+    public void removeClothingItem(int id, ContentResolver resolver) {
         mRealm.beginTransaction();
         RealmResults<ClothingItem> clothingItems = mRealm.where(ClothingItem.class).equalTo("id", id).findAll();
 
         if (!clothingItems.isEmpty()) {
             for (int i = clothingItems.size() - 1; i >= 0; i--) {
-                File file = new File(URI.create(clothingItems.get(i).getPhotoUrl()).getPath());
-                if (file.getAbsoluteFile().exists()) {
-                    file.delete();
+                int deletedImg = resolver.delete(Uri.parse(clothingItems.get(i).getPhotoUrl()), null, null);
+                if (deletedImg == 1) {
                     clothingItems.get(i).deleteFromRealm();
                 }
             }

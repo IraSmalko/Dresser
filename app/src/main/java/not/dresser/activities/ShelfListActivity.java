@@ -40,11 +40,6 @@ public class ShelfListActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         SwipeHelper swipeHelper = new SwipeHelper(recyclerView, getApplicationContext());
 
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setItemViewCacheSize(20);
-        recyclerView.setDrawingCacheEnabled(true);
-        recyclerView.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
-
         mIntent = getIntent();
 
         getSupportActionBar().setTitle(mIntent.getStringExtra(NAME));

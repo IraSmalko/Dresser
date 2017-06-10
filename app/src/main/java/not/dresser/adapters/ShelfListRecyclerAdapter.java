@@ -14,6 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -129,7 +130,7 @@ public class ShelfListRecyclerAdapter extends RecyclerView.Adapter<ShelfListRecy
         if (mItems.contains(data)) {
             mItems.remove(position);
             notifyItemRemoved(position);
-            new CRUDRealm().removeClothingItem(data.getId());
+            new CRUDRealm().removeClothingItem(data.getId(), mContext.getContentResolver());
         }
     }
 

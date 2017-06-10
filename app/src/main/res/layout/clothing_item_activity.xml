@@ -22,7 +22,7 @@
                 android:id="@+id/photoImageView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                ads:srcCompat="@drawable/chirt" />
+                ads:srcCompat="@drawable/t_shirt" />
 
             <TextView
                 android:id="@+id/category"

@@ -22,14 +22,13 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
 
+import not.dresser.R;
 import not.dresser.helpers.CRUDRealm;
 import not.dresser.helpers.CropHelper;
-import not.dresser.helpers.ImagesHelper;
 import not.dresser.helpers.PhotoFromCameraHelper;
-import not.dresser.R;
 
-import static not.dresser.helpers.CropHelper.REQUEST_CROP_PICTURE;
 import static not.dresser.activities.MainActivity.NAME;
+import static not.dresser.helpers.CropHelper.REQUEST_CROP_PICTURE;
 import static not.dresser.helpers.PhotoFromCameraHelper.GALLERY_REQUEST;
 import static not.dresser.helpers.PhotoFromCameraHelper.REQUEST_IMAGE_CAPTURE;
 
@@ -77,11 +76,15 @@ public class AddClothingItemActivity extends AppCompatActivity {
         assert actionBar != null;
         actionBar.setTitle(intent.getStringExtra(NAME));
 
+        int photoId;
         if (!intent.getStringExtra(NAME).contains("-")) {
-            int photoId = getResources().getIdentifier(intent.getStringExtra(NAME), "drawable",
+            photoId = getResources().getIdentifier(intent.getStringExtra(NAME), "drawable",
                     getApplicationContext().getPackageName());
-            mImageView.setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), photoId));
+        } else {
+            photoId = getResources().getIdentifier(intent.getStringExtra(NAME).replace("-", "_").toLowerCase(),
+                    "drawable", getApplicationContext().getPackageName());
         }
+        mImageView.setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), photoId));
 
         mCropHelper = new CropHelper(this, new CropHelper.OnCrop() {
             @Override
@@ -93,8 +96,6 @@ public class AddClothingItemActivity extends AppCompatActivity {
                             @Override
                             public void onResourceReady(Bitmap resource, GlideAnimation glideAnimation) {
                                 mImageView.setImageBitmap(resource);
-//                                mPhotoUrl = ImagesHelper.getPathForNewPhoto(mCropHelper
-//                                        .randomPhotoName(), resource, getApplicationContext());
                                 mPhotoUrl = MediaStore.Images.Media.insertImage(getContentResolver(),
                                         resource, null, null);
                             }

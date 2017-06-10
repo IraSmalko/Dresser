@@ -2,7 +2,6 @@ package not.dresser.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
@@ -13,7 +12,6 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -117,7 +115,7 @@ public class MainActivity extends AppCompatActivity
 
     public List<Category> addCategoryList() {
         List<Category> categoryList = new ArrayList<>();
-        int[] categoryImage = {R.drawable.chirt, R.drawable.pants, R.drawable.dress,
+        int[] categoryImage = {R.drawable.t_shirt, R.drawable.pants, R.drawable.dress,
                 R.drawable.shorts, R.drawable.skirt, R.drawable.shirt, R.drawable.jacket};
         for (int i = 0; i < getResources().getStringArray(R.array.category).length; i++) {
             Category category = new Category();
