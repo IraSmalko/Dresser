@@ -7,7 +7,6 @@ import android.graphics.PointF;
 import android.hardware.Camera;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -23,25 +22,22 @@ import static not.dresser.activities.ShelfListActivity.PHOTO_URL;
 
 public class ConstructorActivity extends AppCompatActivity implements View.OnTouchListener {
 
-    private Camera camera;
-    private static final String TAG = "Touch";
-    @SuppressWarnings("unused")
-    private static final float MIN_ZOOM = 1f,MAX_ZOOM = 1f;
-
-    // These matrices will be used to scale points of the image
-    Matrix matrix = new Matrix();
-    Matrix savedMatrix = new Matrix();
+    private Camera mCamera;
 
     // The 3 states (events) which the user is trying to perform
     static final int NONE = 0;
     static final int DRAG = 1;
     static final int ZOOM = 2;
-    int mode = NONE;
+
+    // These matrices will be used to scale points of the image
+    private Matrix mMatrix = new Matrix();
+    private Matrix mSavedMatrix = new Matrix();
 
     // these PointF objects are used to record the point(s) the user is touching
-    PointF start = new PointF();
-    PointF mid = new PointF();
-    float oldDist = 1f;
+    private PointF mStart = new PointF();
+    private PointF mMid = new PointF();
+    private float mOldDist = 1f;
+    private int mMode = NONE;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,9 +55,9 @@ public class ConstructorActivity extends AppCompatActivity implements View.OnTou
             @Override
             public void surfaceCreated(SurfaceHolder holder) {
                 try {
-                    camera.setPreviewDisplay(holder);
-                    camera.setDisplayOrientation(90);
-                    camera.startPreview();
+                    mCamera.setPreviewDisplay(holder);
+                    mCamera.setDisplayOrientation(90);
+                    mCamera.startPreview();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -83,15 +79,15 @@ public class ConstructorActivity extends AppCompatActivity implements View.OnTou
     @Override
     protected void onResume() {
         super.onResume();
-        camera = Camera.open();
+        mCamera = Camera.open();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        if (camera != null)
-            camera.release();
-        camera = null;
+        if (mCamera != null)
+            mCamera.release();
+        mCamera = null;
     }
 
     @Override
@@ -106,57 +102,49 @@ public class ConstructorActivity extends AppCompatActivity implements View.OnTou
 
         switch (event.getAction() & MotionEvent.ACTION_MASK) {
             case MotionEvent.ACTION_DOWN:   // first finger down only
-                savedMatrix.set(matrix);
-                start.set(event.getX(), event.getY());
-                Log.d(TAG, "mode=DRAG"); // write to LogCat
-                mode = DRAG;
+                mSavedMatrix.set(mMatrix);
+                mStart.set(event.getX(), event.getY());
+                mMode = DRAG;
                 break;
 
             case MotionEvent.ACTION_UP: // first finger lifted
 
             case MotionEvent.ACTION_POINTER_UP: // second finger lifted
 
-                mode = NONE;
-                Log.d(TAG, "mode=NONE");
+                mMode = NONE;
                 break;
 
             case MotionEvent.ACTION_POINTER_DOWN: // first and second finger down
 
-                oldDist = zoomHelper.spacing(event);
-                Log.d(TAG, "oldDist=" + oldDist);
-                if (oldDist > 5f) {
-                    savedMatrix.set(matrix);
-                    zoomHelper.midPoint(mid, event);
-                    mode = ZOOM;
-                    Log.d(TAG, "mode=ZOOM");
+                mOldDist = zoomHelper.spacing(event);
+                if (mOldDist > 5f) {
+                    mSavedMatrix.set(mMatrix);
+                    zoomHelper.midPoint(mMid, event);
+                    mMode = ZOOM;
                 }
                 break;
 
             case MotionEvent.ACTION_MOVE:
 
-                if (mode == DRAG) {
-                    matrix.set(savedMatrix);
-                    matrix.postTranslate(event.getX() - start.x, event.getY() - start.y); // create the transformation in the matrix  of points
-                } else if (mode == ZOOM) {
+                if (mMode == DRAG) {
+                    mMatrix.set(mSavedMatrix);
+                    mMatrix.postTranslate(event.getX() - mStart.x, event.getY() - mStart.y); // create the transformation in the mMatrix  of points
+                } else if (mMode == ZOOM) {
                     // pinch zooming
                     float newDist = zoomHelper.spacing(event);
-                    Log.d(TAG, "newDist=" + newDist);
                     if (newDist > 5f) {
-                        matrix.set(savedMatrix);
-                        scale = newDist / oldDist; // setting the scaling of the
-                        // matrix...if scale > 1 means
+                        mMatrix.set(mSavedMatrix);
+                        scale = newDist / mOldDist; // setting the scaling of the
+                        // mMatrix...if scale > 1 means
                         // zoom in...if scale < 1 means
                         // zoom out
-                        matrix.postScale(scale, scale, mid.x, mid.y);
+                        mMatrix.postScale(scale, scale, mMid.x, mMid.y);
                     }
                 }
                 break;
         }
-
-        view.setImageMatrix(matrix); // display the transformation on screen
+        view.setImageMatrix(mMatrix); // display the transformation on screen
 
         return true; // indicate event was handled
     }
-
-
 }

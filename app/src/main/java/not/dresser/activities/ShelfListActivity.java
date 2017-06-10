@@ -28,7 +28,6 @@ public class ShelfListActivity extends AppCompatActivity {
     public static final String SEASON = "season";
 
     private Intent mIntent;
-    private List<ClothingItem> mClothingItems = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,9 +42,9 @@ public class ShelfListActivity extends AppCompatActivity {
         mIntent = getIntent();
 
         getSupportActionBar().setTitle(mIntent.getStringExtra(NAME));
-        mClothingItems = new CRUDRealm().getClothingList(mIntent.getStringExtra(NAME));
+        List<ClothingItem> clothingItems = new CRUDRealm().getClothingList(mIntent.getStringExtra(NAME));
 
-        ShelfListRecyclerAdapter recyclerAdapter = new ShelfListRecyclerAdapter(this, mClothingItems,
+        ShelfListRecyclerAdapter recyclerAdapter = new ShelfListRecyclerAdapter(this, clothingItems,
                 new ShelfListRecyclerAdapter.ItemClickListener() {
                     @Override
                     public void onItemClick(ClothingItem item) {

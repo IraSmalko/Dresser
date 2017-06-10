@@ -7,7 +7,6 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -17,9 +16,9 @@ import com.bumptech.glide.Glide;
 import not.dresser.R;
 
 import static not.dresser.activities.MainActivity.NAME;
+import static not.dresser.activities.ShelfListActivity.CATEGORY;
 import static not.dresser.activities.ShelfListActivity.OCCASION;
 import static not.dresser.activities.ShelfListActivity.PHOTO_URL;
-import static not.dresser.activities.ShelfListActivity.CATEGORY;
 import static not.dresser.activities.ShelfListActivity.SEASON;
 
 public class ClothingItemActivity extends AppCompatActivity {

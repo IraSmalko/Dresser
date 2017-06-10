@@ -16,17 +16,17 @@ import java.util.Random;
 public class CropHelper {
 
     public static final int REQUEST_CROP_PICTURE = 2;
+
     private Context mContext;
     private OnCrop mOnCropListener;
     private Uri mCropImageUri;
-    private String mPhotoName;
 
     public CropHelper(Context context, OnCrop onCropListener) {
         mContext = context;
         mOnCropListener = onCropListener;
     }
 
-    public String randomPhotoName(){
+    public String randomPhotoName() {
         final Random random = new Random();
         return String.valueOf(random.nextInt()) + "photoCrop.jpg";
     }

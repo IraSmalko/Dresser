@@ -17,12 +17,11 @@ import java.util.List;
 
 public class PhotoFromCameraHelper {
 
-   public static final int REQUEST_IMAGE_CAPTURE = 22;
-   public static final int GALLERY_REQUEST = 13;
+    public static final int REQUEST_IMAGE_CAPTURE = 22;
+    public static final int GALLERY_REQUEST = 13;
 
     private Context mContext;
     private OnPhotoPicked mOnPhotoPickedListener;
-
     private Uri mFilePath;
 
     public PhotoFromCameraHelper(Context context, OnPhotoPicked onPhotoPickedListener) {

@@ -37,7 +37,7 @@ public class AddClothingItemActivity extends AppCompatActivity {
     private PhotoFromCameraHelper mPhotoFromCameraHelper;
     private CropHelper mCropHelper;
     private ImageView mImageView;
-    private Spinner categorySpinner, occasionSpinner, seasonSpinner;
+    private Spinner mCategorySpinner, mOccasionSpinner, mSeasonSpinner;
     private EditText mInputName;
     private String mPhotoUrl;
 
@@ -52,9 +52,9 @@ public class AddClothingItemActivity extends AppCompatActivity {
         ImageButton btnPhotoFromGallery = (ImageButton) findViewById(R.id.categoryPhotoUrlGallery);
         ImageButton btnPhotoFromCamera = (ImageButton) findViewById(R.id.categoryPhotoUrlCamera);
         Button btnSave = (Button) findViewById(R.id.btnSave);
-        categorySpinner = (Spinner) findViewById(R.id.categorySpinner);
-        occasionSpinner = (Spinner) findViewById(R.id.occasionSpinner);
-        seasonSpinner = (Spinner) findViewById(R.id.seasonSpinner);
+        mCategorySpinner = (Spinner) findViewById(R.id.categorySpinner);
+        mOccasionSpinner = (Spinner) findViewById(R.id.occasionSpinner);
+        mSeasonSpinner = (Spinner) findViewById(R.id.seasonSpinner);
 
         ArrayAdapter<String> categoryAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item,
                 getResources().getStringArray(R.array.category));
@@ -65,12 +65,12 @@ public class AddClothingItemActivity extends AppCompatActivity {
         categoryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         occasionAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         seasonAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        categorySpinner.setAdapter(categoryAdapter);
-        occasionSpinner.setAdapter(occasionAdapter);
-        seasonSpinner.setAdapter(seasonAdapter);
-        categorySpinner.setPrompt("Category");
-        occasionSpinner.setPrompt("Occasion");
-        seasonSpinner.setPrompt("Season");
+        mCategorySpinner.setAdapter(categoryAdapter);
+        mOccasionSpinner.setAdapter(occasionAdapter);
+        mSeasonSpinner.setAdapter(seasonAdapter);
+        mCategorySpinner.setPrompt("Category");
+        mOccasionSpinner.setPrompt("Occasion");
+        mSeasonSpinner.setPrompt("Season");
 
         Intent intent = getIntent();
         assert actionBar != null;
@@ -127,9 +127,9 @@ public class AddClothingItemActivity extends AppCompatActivity {
                     break;
                 case R.id.btnSave:
                     if (mPhotoUrl != null && !mInputName.getText().toString().equals("")) {
-                        String itemCategorySpinner = categorySpinner.getSelectedItem().toString();
-                        String itemOccasionSpinnerSpinner = occasionSpinner.getSelectedItem().toString();
-                        String itemSeasonSpinner = seasonSpinner.getSelectedItem().toString();
+                        String itemCategorySpinner = mCategorySpinner.getSelectedItem().toString();
+                        String itemOccasionSpinnerSpinner = mOccasionSpinner.getSelectedItem().toString();
+                        String itemSeasonSpinner = mSeasonSpinner.getSelectedItem().toString();
                         int id = new CRUDRealm().addClothingItem(mInputName.getText().toString(), mPhotoUrl,
                                 itemCategorySpinner, itemOccasionSpinnerSpinner, itemSeasonSpinner);
                         Toast.makeText(getApplicationContext(), String.valueOf(id), Toast.LENGTH_SHORT).show();

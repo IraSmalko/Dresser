@@ -9,15 +9,15 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="?attr/colorPrimary"/>
+        android:background="?attr/colorPrimary" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/shelfListRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/fab"
-        app:layoutManager="GridLayoutManager"
-        android:layout_marginTop="62dp"/>
+        android:layout_marginTop="62dp"
+        app:layoutManager="GridLayoutManager" />
 
 
     <android.support.design.widget.FloatingActionButton

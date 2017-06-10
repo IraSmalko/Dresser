@@ -23,7 +23,7 @@ public class CategoryRecyclerAdapter extends RecyclerView.Adapter<CategoryRecycl
     private CategoryRecyclerAdapter.ItemClickListener mClickListener;
 
     public CategoryRecyclerAdapter(Context context, List<Category> items,
-                                         CategoryRecyclerAdapter.ItemClickListener clickListener) {
+                                   CategoryRecyclerAdapter.ItemClickListener clickListener) {
         updateAdapter(items);
         mContext = context;
         mClickListener = clickListener;
@@ -48,8 +48,8 @@ public class CategoryRecyclerAdapter extends RecyclerView.Adapter<CategoryRecycl
     @Override
     public void onBindViewHolder(CustomViewHolder holder, int position) {
         final Category item = mItems.get(position);
-            holder.textView.setText(item.getName());
-            holder.imageView.setImageDrawable(item.getPhoto());
+        holder.textView.setText(item.getName());
+        holder.imageView.setImageDrawable(item.getPhoto());
 
         View.OnClickListener listener = new View.OnClickListener() {
             @Override

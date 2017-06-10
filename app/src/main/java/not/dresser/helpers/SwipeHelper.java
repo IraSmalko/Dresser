@@ -51,6 +51,6 @@ public class SwipeHelper {
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(swipeHelper);
         itemTouchHelper.attachToRecyclerView(mRecyclerView);
         swipeHelper.setmLeftSwipeLable(mContext.getResources().getString(R.string.extraction));
-        swipeHelper.setmLeftcolorCode(ContextCompat.getColor(mContext, R.color.starFullySelected));
+        swipeHelper.setmLeftColorCode(ContextCompat.getColor(mContext, R.color.starFullySelected));
     }
 }

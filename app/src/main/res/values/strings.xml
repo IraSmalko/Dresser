@@ -8,5 +8,11 @@
     <string name="extraction">Extraction</string>
     <string name="deleted">Deleted</string>
     <string name="undo">Cancel</string>
+    <string name="add_name">Add name</string>
+    <string name="save">save</string>
+    <string name="t_shirt">T-shirt</string>
+    <string name="category">category</string>
+    <string name="occasion">occasion</string>
+    <string name="season">season</string>
 
 </resources>

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="match_parent">
 
     <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:ads="http://schemas.android.com/apk/res-auto"
@@ -22,6 +22,7 @@
                 android:id="@+id/photoImageView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:contentDescription="@string/t_shirt"
                 ads:srcCompat="@drawable/t_shirt" />
 
             <TextView
@@ -33,7 +34,7 @@
                 android:paddingLeft="16dp"
                 android:paddingRight="16dp"
                 android:paddingTop="16dp"
-                android:text="category"
+                android:text="@string/category"
                 android:textColor="#000"
                 android:textSize="20sp" />
 
@@ -45,7 +46,7 @@
                 android:paddingBottom="16dp"
                 android:paddingLeft="16dp"
                 android:paddingRight="16dp"
-                android:text="occasion"
+                android:text="@string/occasion"
                 android:textColor="#000"
                 android:textSize="20sp" />
 
@@ -57,7 +58,7 @@
                 android:paddingBottom="16dp"
                 android:paddingLeft="16dp"
                 android:paddingRight="16dp"
-                android:text="season"
+                android:text="@string/season"
                 android:textColor="#000"
                 android:textSize="20sp" />
         </LinearLayout>
