@@ -21,6 +21,7 @@ import java.util.List;
 import not.dresser.R;
 import not.dresser.entity.ClothingItem;
 import not.dresser.helpers.CRUDRealm;
+import not.dresser.helpers.RemoveClothingItemAsyncTask;
 
 public class ShelfListRecyclerAdapter extends RecyclerView.Adapter<ShelfListRecyclerAdapter.CustomViewHolder> {
 
@@ -128,7 +129,7 @@ public class ShelfListRecyclerAdapter extends RecyclerView.Adapter<ShelfListRecy
         if (mItems.contains(data)) {
             mItems.remove(position);
             notifyItemRemoved(position);
-            new CRUDRealm().removeClothingItem(data.getId(), mContext.getContentResolver());
+            new RemoveClothingItemAsyncTask( mContext).execute(data.getId());
         }
     }
 
