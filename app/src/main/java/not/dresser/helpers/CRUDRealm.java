@@ -25,12 +25,14 @@ public class CRUDRealm {
     public int addClothingItem(String name, String photoUrl, String category, String occasion, String season) {
         mRealm.beginTransaction();
         int id = allObjects().size() + 1;
-        ClothingItem clothingItem = mRealm.createObject(ClothingItem.class, id);
+        ClothingItem clothingItem = new ClothingItem();
+        clothingItem.setId(id);
         clothingItem.setName(name);
         clothingItem.setCategory(category);
         clothingItem.setOccasion(occasion);
         clothingItem.setPhotoUrl(photoUrl);
         clothingItem.setSeason(season);
+        mRealm.copyToRealmOrUpdate(clothingItem);
         mRealm.commitTransaction();
         return clothingItem.getId();
     }

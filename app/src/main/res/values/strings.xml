@@ -15,4 +15,6 @@
     <string name="occasion">occasion</string>
     <string name="season">season</string>
 
+    <string name="give_permission">Without this permission feature does not work! Allow?</string>
+
 </resources>

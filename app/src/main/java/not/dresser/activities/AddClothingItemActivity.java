@@ -6,6 +6,8 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -25,10 +27,16 @@ import com.bumptech.glide.request.target.SimpleTarget;
 import not.dresser.R;
 import not.dresser.helpers.CRUDRealm;
 import not.dresser.helpers.CropHelper;
+import not.dresser.helpers.PermissionsHelper;
 import not.dresser.helpers.PhotoFromCameraHelper;
 
+import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
+import static android.Manifest.permission.CAMERA;
+import static android.content.pm.PackageManager.PERMISSION_GRANTED;
 import static not.dresser.activities.MainActivity.NAME;
 import static not.dresser.helpers.CropHelper.REQUEST_CROP_PICTURE;
+import static not.dresser.helpers.PermissionsHelper.CAMERA_PERMISSION_REQUEST;
+import static not.dresser.helpers.PermissionsHelper.WRITE_EXTERNAL_STORAGE_REQUEST;
 import static not.dresser.helpers.PhotoFromCameraHelper.GALLERY_REQUEST;
 import static not.dresser.helpers.PhotoFromCameraHelper.REQUEST_IMAGE_CAPTURE;
 
@@ -123,16 +131,29 @@ public class AddClothingItemActivity extends AppCompatActivity {
                     mPhotoFromCameraHelper.pickPhoto();
                     break;
                 case R.id.categoryPhotoUrlCamera:
-                    mPhotoFromCameraHelper.takePhoto();
+                    if (ActivityCompat.checkSelfPermission(getApplicationContext(), CAMERA) != PERMISSION_GRANTED) {
+                        if (ActivityCompat.shouldShowRequestPermissionRationale(AddClothingItemActivity.this, CAMERA)) {
+                            new PermissionsHelper().showPermissionDialog(CAMERA_PERMISSION_REQUEST);
+                        } else {
+                            ActivityCompat.requestPermissions(AddClothingItemActivity.this,
+                                    new String[]{CAMERA}, CAMERA_PERMISSION_REQUEST);
+                        }
+                    } else {
+                        mPhotoFromCameraHelper.takePhoto();
+                    }
                     break;
                 case R.id.btnSave:
-                    if (mPhotoUrl != null && !mInputName.getText().toString().equals("")) {
-                        String itemCategorySpinner = mCategorySpinner.getSelectedItem().toString();
-                        String itemOccasionSpinnerSpinner = mOccasionSpinner.getSelectedItem().toString();
-                        String itemSeasonSpinner = mSeasonSpinner.getSelectedItem().toString();
-                        int id = new CRUDRealm().addClothingItem(mInputName.getText().toString(), mPhotoUrl,
-                                itemCategorySpinner, itemOccasionSpinnerSpinner, itemSeasonSpinner);
-                        Toast.makeText(getApplicationContext(), String.valueOf(id), Toast.LENGTH_SHORT).show();
+                    if (ActivityCompat.checkSelfPermission(getApplicationContext(), WRITE_EXTERNAL_STORAGE)
+                            != PERMISSION_GRANTED) {
+                        if (ActivityCompat.shouldShowRequestPermissionRationale(AddClothingItemActivity.this,
+                                WRITE_EXTERNAL_STORAGE)) {
+                            new PermissionsHelper().showPermissionDialog(WRITE_EXTERNAL_STORAGE_REQUEST);
+                        } else {
+                            ActivityCompat.requestPermissions(AddClothingItemActivity.this,
+                                    new String[]{WRITE_EXTERNAL_STORAGE}, WRITE_EXTERNAL_STORAGE_REQUEST);
+                        }
+                    } else {
+                        saveButtonPressed();
                     }
                     break;
             }
@@ -148,6 +169,38 @@ public class AddClothingItemActivity extends AppCompatActivity {
             if (resultCode == RESULT_OK) {
                 mCropHelper.onActivityResult(resultCode, requestCode);
             }
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        if (requestCode == CAMERA_PERMISSION_REQUEST) {
+            if (grantResults[0] == PERMISSION_GRANTED) {
+                mPhotoFromCameraHelper.takePhoto();
+            } else {
+                new PermissionsHelper(AddClothingItemActivity.this)
+                        .showPermissionDialog(CAMERA_PERMISSION_REQUEST);
+            }
+        } else if (requestCode == WRITE_EXTERNAL_STORAGE_REQUEST) {
+            if (grantResults[0] == PERMISSION_GRANTED) {
+                saveButtonPressed();
+            } else {
+                new PermissionsHelper(AddClothingItemActivity.this)
+                        .showPermissionDialog(WRITE_EXTERNAL_STORAGE_REQUEST);
+            }
+        }
+    }
+
+    private void saveButtonPressed() {
+        if (mPhotoUrl != null && !mInputName.getText().toString().equals("")) {
+            String itemCategorySpinner = mCategorySpinner.getSelectedItem().toString();
+            String itemOccasionSpinnerSpinner = mOccasionSpinner.getSelectedItem().toString();
+            String itemSeasonSpinner = mSeasonSpinner.getSelectedItem().toString();
+            int id = new CRUDRealm().addClothingItem(mInputName.getText().toString(), mPhotoUrl,
+                    itemCategorySpinner, itemOccasionSpinnerSpinner, itemSeasonSpinner);
+            Toast.makeText(getApplicationContext(), String.valueOf(id), Toast.LENGTH_SHORT).show();
         }
     }
 }
