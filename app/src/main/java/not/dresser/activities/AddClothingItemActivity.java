@@ -25,13 +25,14 @@ import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
 
 import not.dresser.R;
+import not.dresser.entity.ClothingItem;
 import not.dresser.helpers.CRUDRealm;
 import not.dresser.helpers.CropHelper;
 import not.dresser.helpers.PermissionsHelper;
 import not.dresser.helpers.PhotoFromCameraHelper;
 
-import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 import static android.Manifest.permission.CAMERA;
+import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 import static android.content.pm.PackageManager.PERMISSION_GRANTED;
 import static not.dresser.activities.MainActivity.NAME;
 import static not.dresser.helpers.CropHelper.REQUEST_CROP_PICTURE;
@@ -195,12 +196,21 @@ public class AddClothingItemActivity extends AppCompatActivity {
 
     private void saveButtonPressed() {
         if (mPhotoUrl != null && !mInputName.getText().toString().equals("")) {
-            String itemCategorySpinner = mCategorySpinner.getSelectedItem().toString();
-            String itemOccasionSpinnerSpinner = mOccasionSpinner.getSelectedItem().toString();
-            String itemSeasonSpinner = mSeasonSpinner.getSelectedItem().toString();
-            int id = new CRUDRealm().addClothingItem(mInputName.getText().toString(), mPhotoUrl,
-                    itemCategorySpinner, itemOccasionSpinnerSpinner, itemSeasonSpinner);
-            Toast.makeText(getApplicationContext(), String.valueOf(id), Toast.LENGTH_SHORT).show();
+            int exist = 0;
+            for (ClothingItem clothingItem : new CRUDRealm().allObjects()) {
+                if (clothingItem.getPhotoUrl().equals(mPhotoUrl)) {
+                    exist = 1;
+                }
+            }
+            if (exist != 1) {
+                String itemCategorySpinner = mCategorySpinner.getSelectedItem().toString();
+                String itemOccasionSpinnerSpinner = mOccasionSpinner.getSelectedItem().toString();
+                String itemSeasonSpinner = mSeasonSpinner.getSelectedItem().toString();
+                int id = new CRUDRealm().addClothingItem(mInputName.getText().toString(), mPhotoUrl,
+                        itemCategorySpinner, itemOccasionSpinnerSpinner, itemSeasonSpinner);
+                Toast.makeText(getApplicationContext(), String.valueOf(id), Toast.LENGTH_SHORT).show();
+            }else Toast.makeText(getApplicationContext(), getResources().getString(R.string.photo_exists),
+                    Toast.LENGTH_SHORT).show();
         }
     }
 }

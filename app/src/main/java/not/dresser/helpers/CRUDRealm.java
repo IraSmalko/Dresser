@@ -18,7 +18,7 @@ public class CRUDRealm {
         mRealm = Realm.getDefaultInstance();
     }
 
-    private List<ClothingItem> allObjects() {
+    public List<ClothingItem> allObjects() {
         return mRealm.where(ClothingItem.class).findAll();
     }
 
