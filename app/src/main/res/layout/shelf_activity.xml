@@ -1,36 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="wrap_content"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/vertical_courses_list"
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-    <FrameLayout
-        android:id="@+id/frgm1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        <com.lsjwzh.widget.recyclerviewpager.RecyclerViewPager
+            android:id="@+id/vertical_courses_list"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:clipToPadding="false"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            app:rvp_singlePageFling="true"
+            app:rvp_triggerOffset="0.1" />
 
-    <FrameLayout
-        android:id="@+id/frgm2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        <com.lsjwzh.widget.recyclerviewpager.RecyclerViewPager
+            android:id="@+id/vertical_courses"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:clipToPadding="false"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            app:rvp_singlePageFling="true"
+            app:rvp_triggerOffset="0.1" />
 
-    <FrameLayout
-        android:id="@+id/frgm3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        <com.lsjwzh.widget.recyclerviewpager.RecyclerViewPager
+            android:id="@+id/vertical"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:clipToPadding="false"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            app:rvp_singlePageFling="true"
+            app:rvp_triggerOffset="0.1" />
 
-    <!--<ImageButton-->
+        <FrameLayout
+            android:id="@+id/frgm1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <FrameLayout
+            android:id="@+id/frgm2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <FrameLayout
+            android:id="@+id/frgm3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <!--<ImageButton-->
         <!--android:id="@+id/imageBtn"-->
         <!--android:layout_width="wrap_content"-->
         <!--android:layout_height="wrap_content"-->
         <!--android:contentDescription="@string/add_image"-->
         <!--app:srcCompat="@drawable/t_shirt_plus" />-->
 
+        <ImageView
+            android:id="@+id/q"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
 
-</LinearLayout>
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="@dimen/fab_margin"
+            app:srcCompat="@drawable/plus" />
+
+    </LinearLayout>
+
+</ScrollView>
