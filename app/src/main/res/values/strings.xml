@@ -18,5 +18,6 @@
     <string name="give_permission">Without this permission feature does not work! Allow?</string>
 
     <string name="photo_exists">Photo already exists!</string>
+    <string name="add_image">add image</string>
 
 </resources>

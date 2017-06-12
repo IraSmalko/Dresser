@@ -9,13 +9,12 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import not.dresser.helpers.CRUDRealm;
 import not.dresser.R;
 import not.dresser.adapters.ShelfListRecyclerAdapter;
 import not.dresser.entity.ClothingItem;
+import not.dresser.helpers.CRUDRealm;
 import not.dresser.helpers.SwipeHelper;
 
 import static not.dresser.activities.MainActivity.NAME;
