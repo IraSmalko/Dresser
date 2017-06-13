@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -7,19 +6,16 @@
     android:layout_centerVertical="true"
     android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/course_item_name_tv"
+    <ImageView
+        android:id="@+id/imageView"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
-    <com.lsjwzh.widget.recyclerviewpager.RecyclerViewPager
-        android:id="@+id/horizontal_list"
-        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingLeft="15dp"
-        android:paddingRight="15dp"
-        app:rvp_triggerOffset="0.1"
-        app:rvp_singlePageFling="true"
-        android:clipToPadding="false"/>
+        android:src="@drawable/t_shirt" />
 
+    <TextView
+        android:id="@+id/text"
+        android:layout_width="match_parent"
+        android:padding="5dp"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"/>
 </LinearLayout>

@@ -7,6 +7,7 @@ import android.os.AsyncTask;
 
 import com.bumptech.glide.Glide;
 
+import java.io.ByteArrayOutputStream;
 import java.util.concurrent.ExecutionException;
 
 public class PhotoLoaderAsyncTask extends AsyncTask<String, Bitmap, Bitmap> {
