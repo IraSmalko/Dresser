@@ -58,7 +58,7 @@ public class ShelfListActivity extends AppCompatActivity {
                 });
 
         recyclerView.setAdapter(recyclerAdapter);
-        swipeHelper.attachSwipeCategory();
+        swipeHelper.attachSwipeShelfList();
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {

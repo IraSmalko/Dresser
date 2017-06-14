@@ -1,6 +1,5 @@
 package not.dresser.adapters;
 
-
 import android.content.Context;
 import android.os.Handler;
 import android.support.v7.widget.CardView;
@@ -19,32 +18,28 @@ import java.util.HashMap;
 import java.util.List;
 
 import not.dresser.R;
-import not.dresser.entity.ClothingItem;
-import not.dresser.helpers.CRUDRealm;
-import not.dresser.helpers.RemoveClothingItemAsyncTask;
+import not.dresser.entity.ClothingLook;
+import not.dresser.helpers.RemoveClothingLookAsyncTask;
 
-public class ShelfListRecyclerAdapter extends RecyclerView.Adapter<ShelfListRecyclerAdapter.CustomViewHolder> {
+public class LookRecyclerAdapter extends RecyclerView.Adapter<LookRecyclerAdapter.CustomViewHolder> {
 
     private Context mContext;
     private LayoutInflater mInflater;
-    private ClothingItem mItem;
-    private List<ClothingItem> mItems = new ArrayList<>();
-    private ShelfListRecyclerAdapter.ItemClickListener mClickListener;
+    private ClothingLook mItem;
+    private List<ClothingLook> mItems = new ArrayList<>();
 
     private static final int PENDING_REMOVAL_TIMEOUT = 3000;
-    private List<ClothingItem> mItemsPendingRemoval;
+    private List<ClothingLook> mItemsPendingRemoval;
     private Handler mHandler = new Handler();
-    private HashMap<ClothingItem, Runnable> mPendingRunnables = new HashMap<>();
+    private HashMap<ClothingLook, Runnable> mPendingRunnables = new HashMap<>();
 
-    public ShelfListRecyclerAdapter(Context context, List<ClothingItem> items,
-                                    ShelfListRecyclerAdapter.ItemClickListener clickListener) {
+    public LookRecyclerAdapter(Context context, List<ClothingLook> items) {
         updateAdapter(items);
         mContext = context;
-        mClickListener = clickListener;
         mItemsPendingRemoval = new ArrayList<>();
     }
 
-    public void updateAdapter(List<ClothingItem> clothingItems) {
+    public void updateAdapter(List<ClothingLook> clothingItems) {
         mItems.clear();
         if (clothingItems != null) {
             mItems.addAll(clothingItems);
@@ -53,16 +48,16 @@ public class ShelfListRecyclerAdapter extends RecyclerView.Adapter<ShelfListRecy
     }
 
     @Override
-    public ShelfListRecyclerAdapter.CustomViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public CustomViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if (mInflater == null) {
             mInflater = LayoutInflater.from(mContext);
         }
-        return ShelfListRecyclerAdapter.CustomViewHolder.create(mInflater, parent);
+        return CustomViewHolder.create(mInflater, parent);
     }
 
     @Override
-    public void onBindViewHolder(ShelfListRecyclerAdapter.CustomViewHolder holder, int position) {
-        final ClothingItem item = mItems.get(position);
+    public void onBindViewHolder(CustomViewHolder holder, int position) {
+        final ClothingLook item = mItems.get(position);
         mItem = item;
         if (mItemsPendingRemoval.contains(item)) {
             holder.regularLayout.setVisibility(View.GONE);
@@ -71,7 +66,6 @@ public class ShelfListRecyclerAdapter extends RecyclerView.Adapter<ShelfListRecy
             /** {show regular layout} and {hide swipe layout} */
             holder.regularLayout.setVisibility(View.VISIBLE);
             holder.swipeLayout.setVisibility(View.GONE);
-            holder.textView.setText(item.getName());
             Glide.with(mContext).load(item.getPhotoUrl()).into(holder.imageView);
         }
         holder.undo.setOnClickListener(new View.OnClickListener() {
@@ -80,19 +74,9 @@ public class ShelfListRecyclerAdapter extends RecyclerView.Adapter<ShelfListRecy
                 undoOpt(item);
             }
         });
-
-        View.OnClickListener listener = new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mClickListener.onItemClick(item);
-            }
-        };
-
-        holder.imageView.setOnClickListener(listener);
-        holder.textView.setOnClickListener(listener);
     }
 
-    private void undoOpt(ClothingItem item) {
+    private void undoOpt(ClothingLook item) {
         Runnable pendingRemovalRunnable = mPendingRunnables.get(item);
         mPendingRunnables.remove(item);
         if (pendingRemovalRunnable != null)
@@ -103,7 +87,7 @@ public class ShelfListRecyclerAdapter extends RecyclerView.Adapter<ShelfListRecy
     }
 
     public void pendingRemoval(int position) {
-        final ClothingItem data = mItems.get(position);
+        final ClothingLook data = mItems.get(position);
         if (!mItemsPendingRemoval.contains(data)) {
             mItemsPendingRemoval.add(data);
             // this will redraw row in "undo" state
@@ -122,19 +106,19 @@ public class ShelfListRecyclerAdapter extends RecyclerView.Adapter<ShelfListRecy
     }
 
     private void remove(int position) {
-        ClothingItem data = mItems.get(position);
+        ClothingLook data = mItems.get(position);
         if (mItemsPendingRemoval.contains(data)) {
             mItemsPendingRemoval.remove(data);
         }
         if (mItems.contains(data)) {
             mItems.remove(position);
             notifyItemRemoved(position);
-            new RemoveClothingItemAsyncTask( mContext).execute(data.getId());
+            new RemoveClothingLookAsyncTask( mContext).execute(data.getId());
         }
     }
 
     public boolean isPendingRemoval(int position) {
-        ClothingItem data = mItems.get(position);
+        ClothingLook data = mItems.get(position);
         return mItemsPendingRemoval.contains(data);
     }
 
@@ -147,24 +131,18 @@ public class ShelfListRecyclerAdapter extends RecyclerView.Adapter<ShelfListRecy
         private CardView regularLayout;
         private LinearLayout swipeLayout;
         private TextView undo;
-        private TextView textView;
         private ImageView imageView;
 
-        static ShelfListRecyclerAdapter.CustomViewHolder create(LayoutInflater inflater, ViewGroup parent) {
-            return new ShelfListRecyclerAdapter.CustomViewHolder(inflater.inflate(R.layout.row_item, parent, false));
+        static CustomViewHolder create(LayoutInflater inflater, ViewGroup parent) {
+            return new CustomViewHolder(inflater.inflate(R.layout.row_look_item, parent, false));
         }
 
         CustomViewHolder(View v) {
             super(v);
             this.regularLayout = (CardView) v.findViewById(R.id.card);
-            this.textView = (TextView) v.findViewById(R.id.infoText);
             this.imageView = (ImageView) v.findViewById(R.id.imageView);
             this.swipeLayout = (LinearLayout) v.findViewById(R.id.swipeLayout);
             this.undo = (TextView) v.findViewById(R.id.undo);
         }
-    }
-
-    public interface ItemClickListener {
-        void onItemClick(ClothingItem item);
     }
 }

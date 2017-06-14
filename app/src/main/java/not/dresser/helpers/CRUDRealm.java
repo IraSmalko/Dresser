@@ -9,6 +9,7 @@ import java.util.List;
 import io.realm.Realm;
 import io.realm.RealmResults;
 import not.dresser.entity.ClothingItem;
+import not.dresser.entity.ClothingLook;
 
 public class CRUDRealm {
 
@@ -37,6 +38,21 @@ public class CRUDRealm {
         return clothingItem.getId();
     }
 
+    public List<ClothingLook> getClothingLooks() {
+        return mRealm.where(ClothingLook.class).findAll();
+    }
+
+    public int addClothingLook(String photoUrl){
+        mRealm.beginTransaction();
+        int id = getClothingLooks().size() + 1;
+        ClothingLook clothingLook = new ClothingLook();
+        clothingLook.setId(id);
+        clothingLook.setPhotoUrl(photoUrl);
+        mRealm.copyToRealmOrUpdate(clothingLook);
+        mRealm.commitTransaction();
+        return clothingLook.getId();
+    }
+
     public List<ClothingItem> getClothingList(String categoryName) {
         return mRealm.where(ClothingItem.class).equalTo("category", categoryName).findAll();
     }
@@ -47,9 +63,24 @@ public class CRUDRealm {
 
         if (!clothingItems.isEmpty()) {
             for (int i = clothingItems.size() - 1; i >= 0; i--) {
-                int deletedImg = resolver.delete(Uri.parse(clothingItems.get(i).getPhotoUrl()), null, null);
+                int deletedImg = new CRUDImage().delete(resolver, clothingItems.get(i).getPhotoUrl());
                 if (deletedImg == 1) {
                     clothingItems.get(i).deleteFromRealm();
+                }
+            }
+        }
+        mRealm.commitTransaction();
+    }
+
+    public void removeClothingLook(int id, ContentResolver resolver) {
+        mRealm.beginTransaction();
+        RealmResults<ClothingLook> clothingLooks = mRealm.where(ClothingLook.class).equalTo("id", id).findAll();
+
+        if (!clothingLooks.isEmpty()) {
+            for (int i = clothingLooks.size() - 1; i >= 0; i--) {
+                int deletedImg = new CRUDImage().delete(resolver, clothingLooks.get(i).getPhotoUrl());
+                if (deletedImg == 1) {
+                    clothingLooks.get(i).deleteFromRealm();
                 }
             }
         }

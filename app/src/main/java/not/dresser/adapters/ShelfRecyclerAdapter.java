@@ -15,7 +15,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import not.dresser.R;
-import not.dresser.entity.Category;
 import not.dresser.entity.ClothingItem;
 
 public class ShelfRecyclerAdapter extends RecyclerView.Adapter<ShelfRecyclerAdapter.CustomViewHolder> {
@@ -74,7 +73,7 @@ public class ShelfRecyclerAdapter extends RecyclerView.Adapter<ShelfRecyclerAdap
         private ImageView imageView;
 
         static CustomViewHolder create(LayoutInflater inflater, ViewGroup parent) {
-            return new CustomViewHolder(inflater.inflate(R.layout.image_item, parent, false));
+            return new CustomViewHolder(inflater.inflate(R.layout.shelf_item, parent, false));
         }
 
         CustomViewHolder(View v) {

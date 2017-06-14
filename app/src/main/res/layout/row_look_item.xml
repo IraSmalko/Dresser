@@ -5,6 +5,6 @@
 
     <include layout="@layout/undo_item" />
 
-    <include layout="@layout/shelf_card_item" />
+    <include layout="@layout/image_item" />
 
 </FrameLayout>
