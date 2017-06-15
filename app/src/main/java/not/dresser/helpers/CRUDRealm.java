@@ -2,7 +2,6 @@ package not.dresser.helpers;
 
 
 import android.content.ContentResolver;
-import android.net.Uri;
 
 import java.util.List;
 
@@ -23,17 +22,40 @@ public class CRUDRealm {
         return mRealm.where(ClothingItem.class).findAll();
     }
 
+    private int createClothingItemId(){
+        int id = 0;
+        lab1:for (ClothingItem ci : allObjects()) {
+            for (int i = 0; i <= allObjects().size(); i++) {
+                if (ci.getId() != i) {
+                    id = i;
+                    break lab1;
+                }
+            }
+        }
+        return id;
+    }
+
+    private int createClothingLookId(){
+        int id = 0;
+        lab1:for (ClothingLook ci : getClothingLooks()) {
+            for (int i = 0; i <= allObjects().size(); i++) {
+                if (ci.getId() != i) {
+                    id = i;
+                    break lab1;
+                }
+            }
+        }
+        return id;
+    }
+
     public int addClothingItem(String name, String photoUrl, String category, String occasion, String season) {
         mRealm.beginTransaction();
-        int id = allObjects().size() + 1;
-        ClothingItem clothingItem = new ClothingItem();
-        clothingItem.setId(id);
+        ClothingItem clothingItem = mRealm.createObject(ClothingItem.class, createClothingItemId());
         clothingItem.setName(name);
         clothingItem.setCategory(category);
         clothingItem.setOccasion(occasion);
         clothingItem.setPhotoUrl(photoUrl);
         clothingItem.setSeason(season);
-        mRealm.copyToRealmOrUpdate(clothingItem);
         mRealm.commitTransaction();
         return clothingItem.getId();
     }
@@ -42,13 +64,10 @@ public class CRUDRealm {
         return mRealm.where(ClothingLook.class).findAll();
     }
 
-    public int addClothingLook(String photoUrl){
+    public int addClothingLook(String photoUrl) {
         mRealm.beginTransaction();
-        int id = getClothingLooks().size() + 1;
-        ClothingLook clothingLook = new ClothingLook();
-        clothingLook.setId(id);
+        ClothingLook clothingLook = mRealm.createObject(ClothingLook.class, createClothingLookId());
         clothingLook.setPhotoUrl(photoUrl);
-        mRealm.copyToRealmOrUpdate(clothingLook);
         mRealm.commitTransaction();
         return clothingLook.getId();
     }

@@ -23,10 +23,10 @@ public class CRUDImage {
 
     public String takeScreenshot(ContentResolver resolver, FloatingActionButton fab, Window window) {
         fab.setVisibility(View.INVISIBLE);
-        View v1 = window.getDecorView().getRootView();
-        v1.setDrawingCacheEnabled(true);
-        Bitmap bitmap = Bitmap.createBitmap(v1.getDrawingCache());
-        v1.setDrawingCacheEnabled(false);
+        View view = window.getDecorView().getRootView();
+        view.setDrawingCacheEnabled(true);
+        Bitmap bitmap = Bitmap.createBitmap(view.getDrawingCache());
+        view.setDrawingCacheEnabled(false);
         return  add(resolver, bitmap);
     }
 

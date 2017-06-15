@@ -72,7 +72,7 @@ public class SwipeHelper {
     }
 
     public void attachSwipeLook() {
-        SwipeUtil swipeHelper = new SwipeHelper(mRecyclerView, mContext).setSwipeForShelfList();
+        SwipeUtil swipeHelper = new SwipeHelper(mRecyclerView, mContext).setSwipeForLook();
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(swipeHelper);
         itemTouchHelper.attachToRecyclerView(mRecyclerView);
         swipeHelper.setmLeftSwipeLable(mContext.getResources().getString(R.string.extraction));
