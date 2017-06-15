@@ -38,6 +38,7 @@
             android:screenOrientation="portrait" />
         <activity android:name=".activities.CollageActivity" />
         <activity android:name=".activities.LookActivity" />
+        <activity android:name=".activities.LookItemActivity"/>
 
         <activity android:name="com.android.camera.CropImage" />
 

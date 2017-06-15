@@ -56,7 +56,7 @@ public class CollageActivity extends AppCompatActivity {
                         new CRUDRealm().addClothingLook(new CRUDImage().add(getContentResolver(), bitmap));
                         startActivity(new Intent(getApplicationContext(), LookActivity.class));
                     }
-                }).execute(String.valueOf(cropImageUri));
+                }).execute(cropImageUri);
             }
         });
 

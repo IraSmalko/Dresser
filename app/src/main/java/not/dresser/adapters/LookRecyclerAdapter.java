@@ -27,16 +27,18 @@ public class LookRecyclerAdapter extends RecyclerView.Adapter<LookRecyclerAdapte
     private LayoutInflater mInflater;
     private ClothingLook mItem;
     private List<ClothingLook> mItems = new ArrayList<>();
+    private ItemClickListener mClickListener;
 
     private static final int PENDING_REMOVAL_TIMEOUT = 3000;
     private List<ClothingLook> mItemsPendingRemoval;
     private Handler mHandler = new Handler();
     private HashMap<ClothingLook, Runnable> mPendingRunnables = new HashMap<>();
 
-    public LookRecyclerAdapter(Context context, List<ClothingLook> items) {
+    public LookRecyclerAdapter(Context context, List<ClothingLook> items, ItemClickListener clickListener) {
         updateAdapter(items);
         mContext = context;
         mItemsPendingRemoval = new ArrayList<>();
+        mClickListener = clickListener;
     }
 
     public void updateAdapter(List<ClothingLook> clothingItems) {
@@ -74,6 +76,14 @@ public class LookRecyclerAdapter extends RecyclerView.Adapter<LookRecyclerAdapte
                 undoOpt(item);
             }
         });
+
+        View.OnClickListener listener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mClickListener.onItemClick(item);
+            }
+        };
+        holder.regularLayout.setOnClickListener(listener);
     }
 
     private void undoOpt(ClothingLook item) {
@@ -144,5 +154,8 @@ public class LookRecyclerAdapter extends RecyclerView.Adapter<LookRecyclerAdapte
             this.swipeLayout = (LinearLayout) v.findViewById(R.id.swipeLayout);
             this.undo = (TextView) v.findViewById(R.id.undo);
         }
+    }
+    public interface ItemClickListener {
+        void onItemClick(ClothingLook item);
     }
 }
