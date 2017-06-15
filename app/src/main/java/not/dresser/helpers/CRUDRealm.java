@@ -22,28 +22,24 @@ public class CRUDRealm {
         return mRealm.where(ClothingItem.class).findAll();
     }
 
-    private int createClothingItemId(){
+    private int createClothingItemId() {
         int id = 0;
-        lab1:for (ClothingItem ci : allObjects()) {
-            for (int i = 0; i <= allObjects().size(); i++) {
-                if (ci.getId() != i) {
-                    id = i;
-                    break lab1;
-                }
+        for (ClothingItem ci : allObjects()) {
+            if (ci.getId() != id) {
+                return id;
             }
+            ++id;
         }
         return id;
     }
 
-    private int createClothingLookId(){
+    private int createClothingLookId() {
         int id = 0;
-        lab1:for (ClothingLook ci : getClothingLooks()) {
-            for (int i = 0; i <= allObjects().size(); i++) {
-                if (ci.getId() != i) {
-                    id = i;
-                    break lab1;
-                }
+        for (ClothingLook ci : getClothingLooks()) {
+            if (ci.getId() != id) {
+                return id;
             }
+            ++id;
         }
         return id;
     }

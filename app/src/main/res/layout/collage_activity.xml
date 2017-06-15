@@ -8,7 +8,7 @@
     <com.jcmore2.collage.CollageView
         android:id="@+id/collage"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_margin="10dip" />
 
     <android.support.design.widget.FloatingActionButton

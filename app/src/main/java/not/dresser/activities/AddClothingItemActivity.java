@@ -115,7 +115,7 @@ public class AddClothingItemActivity extends AppCompatActivity {
         mPhotoFromCameraHelper = new PhotoFromCameraHelper(this, new PhotoFromCameraHelper.OnPhotoPicked() {
             @Override
             public void onPicked(Uri photoUri) {
-                mCropHelper.cropImage(photoUri);
+                mCropHelper.cropImage(photoUri, 1048, 1048);
             }
         });
 

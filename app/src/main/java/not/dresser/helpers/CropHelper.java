@@ -37,9 +37,9 @@ public class CropHelper {
         return FileProvider.getUriForFile(mContext, "not.dresser", file);
     }
 
-    public void cropImage(Uri photoUri) {
+    public void cropImage(Uri photoUri, int height, int width) {
         mCropImageUri = createFileUriCrop();
-        CropImageIntentBuilder cropImage = new CropImageIntentBuilder(1048, 1048, mCropImageUri);
+        CropImageIntentBuilder cropImage = new CropImageIntentBuilder(width, height, width, height, mCropImageUri);
         cropImage.setOutlineColor(0xFF03A9F4);
         cropImage.setSourceImage(photoUri);
         ActivityCompat.startActivityForResult((AppCompatActivity) mContext, cropImage
