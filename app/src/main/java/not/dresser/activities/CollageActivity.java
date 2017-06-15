@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.ImageView;
 
 import com.jcmore2.collage.CollageView;
 
@@ -29,7 +28,9 @@ public class CollageActivity extends AppCompatActivity {
         Intent intent = getIntent();
 
         for (String url : intent.getStringArrayExtra(IMAGE_URL)) {
-            collage.addCard(new CRUDImage().getBitmap(getContentResolver(), url));
+            if (url != null) {
+                collage.addCard(new CRUDImage().getBitmap(getContentResolver(), url));
+            }
         }
 
         mFab = (FloatingActionButton) findViewById(R.id.fab);
