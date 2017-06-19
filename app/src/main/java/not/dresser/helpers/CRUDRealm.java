@@ -25,23 +25,21 @@ public class CRUDRealm {
     private int createClothingItemId() {
         int id = 0;
         for (ClothingItem ci : allObjects()) {
-            if (ci.getId() != id) {
-                return id;
+            if (ci.getId() > id) {
+                id = ci.getId();
             }
-            ++id;
         }
-        return id;
+        return ++id;
     }
 
     private int createClothingLookId() {
         int id = 0;
         for (ClothingLook ci : getClothingLooks()) {
-            if (ci.getId() != id) {
-                return id;
+            if (ci.getId() > id) {
+                id = ci.getId();
             }
-            ++id;
         }
-        return id;
+        return ++id;
     }
 
     public int addClothingItem(String name, String photoUrl, String category, String occasion, String season) {
