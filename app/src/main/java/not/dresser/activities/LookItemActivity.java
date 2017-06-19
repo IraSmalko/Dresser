@@ -22,7 +22,6 @@ public class LookItemActivity extends AppCompatActivity {
 
         ImageView imageView = (ImageView) findViewById(R.id.imageView);
         Intent intent = getIntent();
-        Glide.with(this).load(intent.getStringExtra(PHOTO_URL)).placeholder(ContextCompat
-                .getDrawable(getApplicationContext(), R.drawable.t_shirt)).into(imageView);
+        Glide.with(this).load(intent.getStringExtra(PHOTO_URL)).into(imageView);
     }
 }
