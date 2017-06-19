@@ -49,6 +49,7 @@ public class AddClothingItemActivity extends AppCompatActivity {
     private Spinner mCategorySpinner, mOccasionSpinner, mSeasonSpinner;
     private EditText mInputName;
     private String mPhotoUrl;
+    private Intent mIntent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,16 +82,16 @@ public class AddClothingItemActivity extends AppCompatActivity {
         mOccasionSpinner.setPrompt("Occasion");
         mSeasonSpinner.setPrompt("Season");
 
-        Intent intent = getIntent();
+        mIntent = getIntent();
         assert actionBar != null;
-        actionBar.setTitle(intent.getStringExtra(NAME));
+        actionBar.setTitle(mIntent.getStringExtra(NAME));
 
         int photoId;
-        if (!intent.getStringExtra(NAME).contains("-")) {
-            photoId = getResources().getIdentifier(intent.getStringExtra(NAME), "drawable",
+        if (!mIntent.getStringExtra(NAME).contains("-")) {
+            photoId = getResources().getIdentifier(mIntent.getStringExtra(NAME), "drawable",
                     getApplicationContext().getPackageName());
         } else {
-            photoId = getResources().getIdentifier(intent.getStringExtra(NAME).replace("-", "_").toLowerCase(),
+            photoId = getResources().getIdentifier(mIntent.getStringExtra(NAME).replace("-", "_").toLowerCase(),
                     "drawable", getApplicationContext().getPackageName());
         }
         mImageView.setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), photoId));
@@ -212,5 +213,13 @@ public class AddClothingItemActivity extends AppCompatActivity {
             }else Toast.makeText(getApplicationContext(), getResources().getString(R.string.photo_exists),
                     Toast.LENGTH_SHORT).show();
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(getApplicationContext(), ShelfListActivity.class);
+        intent.putExtra(NAME, mIntent.getStringExtra(NAME));
+        startActivity(intent);
     }
 }

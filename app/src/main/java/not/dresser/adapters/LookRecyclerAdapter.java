@@ -2,6 +2,7 @@ package not.dresser.adapters;
 
 import android.content.Context;
 import android.os.Handler;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -68,7 +69,8 @@ public class LookRecyclerAdapter extends RecyclerView.Adapter<LookRecyclerAdapte
             /** {show regular layout} and {hide swipe layout} */
             holder.regularLayout.setVisibility(View.VISIBLE);
             holder.swipeLayout.setVisibility(View.GONE);
-            Glide.with(mContext).load(item.getPhotoUrl()).into(holder.imageView);
+            Glide.with(mContext).load(item.getPhotoUrl()).placeholder(ContextCompat
+                    .getDrawable(mContext, R.drawable.t_shirt)).into(holder.imageView);
         }
         holder.undo.setOnClickListener(new View.OnClickListener() {
             @Override

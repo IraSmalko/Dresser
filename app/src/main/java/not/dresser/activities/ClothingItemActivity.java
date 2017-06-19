@@ -44,7 +44,8 @@ public class ClothingItemActivity extends AppCompatActivity {
 
         final Intent intent = getIntent();
         actionBar.setTitle(intent.getStringExtra(NAME));
-        Glide.with(this).load(intent.getStringExtra(PHOTO_URL)).into(imageView);
+        Glide.with(this).load(intent.getStringExtra(PHOTO_URL)).placeholder(ContextCompat
+                .getDrawable(getApplicationContext(), R.drawable.t_shirt)).into(imageView);
         category.setText(intent.getStringExtra(CATEGORY));
         occasion.setText(intent.getStringExtra(OCCASION));
         season.setText(intent.getStringExtra(SEASON));

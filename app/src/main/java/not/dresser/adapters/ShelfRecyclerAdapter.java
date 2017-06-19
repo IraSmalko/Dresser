@@ -2,6 +2,7 @@ package not.dresser.adapters;
 
 
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -50,7 +51,8 @@ public class ShelfRecyclerAdapter extends RecyclerView.Adapter<ShelfRecyclerAdap
     public void onBindViewHolder(CustomViewHolder holder, int position) {
         final ClothingItem item = mItems.get(position);
         holder.textView.setText(item.getName());
-        Glide.with(mContext).load(item.getPhotoUrl()).into(holder.imageView);
+        Glide.with(mContext).load(item.getPhotoUrl()).placeholder(ContextCompat
+                .getDrawable(mContext, R.drawable.t_shirt)).into(holder.imageView);
 
         View.OnClickListener listener = new View.OnClickListener() {
             @Override

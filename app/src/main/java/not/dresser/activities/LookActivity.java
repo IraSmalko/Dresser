@@ -12,6 +12,7 @@ import not.dresser.entity.ClothingLook;
 import not.dresser.helpers.CRUDRealm;
 import not.dresser.helpers.SwipeHelper;
 
+import static not.dresser.activities.MainActivity.NAME;
 import static not.dresser.activities.ShelfListActivity.PHOTO_URL;
 
 public class LookActivity extends AppCompatActivity {
@@ -35,5 +36,10 @@ public class LookActivity extends AppCompatActivity {
         });
         recyclerView.setAdapter(adapter);
         swipeHelper.attachSwipeLook();
+    }
+
+    public void onBackPressed() {
+        super.onBackPressed();
+        startActivity(new Intent(this, MainActivity.class));
     }
 }
